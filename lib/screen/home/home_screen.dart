@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:social/base/base_view_view_model.dart';
 import 'package:social/res/app_colors.dart';
 import 'package:social/res/style.dart';
+import 'package:social/router/router_name.dart';
 import 'package:social/screen/home/home_binding.dart';
 
 class HomeScreen extends BaseView<HomeController> {
@@ -11,6 +12,114 @@ class HomeScreen extends BaseView<HomeController> {
   @override
   Widget vBuilder(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: SizedBox(
+        width: double.infinity,
+        height: 111.h,
+        child: Stack(
+          children: [
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Container(
+                width: double.infinity,
+                height: 86.h,
+                padding: EdgeInsets.only(left: 30.w, right: 30.w, bottom: 20.h),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20.r),
+                  boxShadow: [
+                    BoxShadow(
+                      color: AppColors.lightBlackColor,
+                      blurRadius: 15.r,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
+                  color: Colors.white,
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          "assets/image/home_ic.png",
+                          height: 20.h,
+                          width: 18.w,
+                        ),
+                        SizedBox(
+                          width: 44.w,
+                        ),
+                        GestureDetector(
+                          onTap: (){
+                            Get.toNamed(RouterName.message);
+                          },
+                          child: Image.asset(
+                            "assets/image/chat_ic.png",
+                            height: 20.h,
+                            width: 18.w,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          "assets/image/like_ic.png",
+                          height: 20.h,
+                          width: 18.w,
+                        ),
+                        SizedBox(
+                          width: 44.w,
+                        ),
+                        GestureDetector(
+                          onTap: (){
+                            Get.toNamed(RouterName.profile);
+                          },
+                          child: Image.asset(
+                            "assets/image/profile_ic.png",
+                            height: 20.h,
+                            width: 18.w,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Align(
+              alignment: Alignment.topCenter,
+              child: Container(
+                height: 62.w,
+                width: 62.w,
+                decoration:  BoxDecoration(
+                  image: const DecorationImage(
+                    image: AssetImage("assets/image/bottomsheet.png"),
+                  ),
+                  borderRadius: BorderRadius.circular(23.r),
+                  boxShadow: [
+                    BoxShadow(
+                      color: AppColors.text3Color,
+                      blurRadius: 12.r,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
+                ),
+                child: Center(
+                  child: Image.asset(
+                    "assets/image/bottom_plus.png",
+                    height: 26.w,
+                    width: 26.w,
+                    fit: BoxFit.contain,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
       body: Stack(
         children: [
           Image.asset(
@@ -119,7 +228,7 @@ class HomeScreen extends BaseView<HomeController> {
                           ListView.builder(
                             shrinkWrap: true,
                             physics: const NeverScrollableScrollPhysics(),
-                            itemCount: 2,
+                            itemCount: controller.homeData.length,
                             itemBuilder: (context, index) {
                               return Container(
                                 margin: EdgeInsets.only(bottom: 32.h),
@@ -127,8 +236,10 @@ class HomeScreen extends BaseView<HomeController> {
                                 width: double.infinity,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(20.r),
-                                  image: const DecorationImage(
-                                    image: AssetImage("assets/image/home1.jpg"),
+                                  image: DecorationImage(
+                                    image: AssetImage(controller.homeData[index]
+                                            ["image"]
+                                        .toString()),
                                     fit: BoxFit.cover,
                                   ),
                                 ),
@@ -138,24 +249,27 @@ class HomeScreen extends BaseView<HomeController> {
                                       padding: EdgeInsets.all(13.r),
                                       child: Row(
                                         mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                            MainAxisAlignment.spaceBetween,
                                         crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                            CrossAxisAlignment.start,
                                         children: [
                                           Row(
                                             mainAxisAlignment:
-                                            MainAxisAlignment.start,
+                                                MainAxisAlignment.start,
                                             crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                                CrossAxisAlignment.start,
                                             children: [
                                               ClipRRect(
                                                 borderRadius:
-                                                BorderRadius.circular(
-                                                    100.r),
+                                                    BorderRadius.circular(
+                                                        100.r),
                                                 child: Image.asset(
-                                                  "assets/image/profile1.jpg",
+                                                  controller.homeData[index]
+                                                          ["profile"]
+                                                      .toString(),
                                                   height: 36.w,
                                                   width: 36.w,
+                                                  fit: BoxFit.cover,
                                                 ),
                                               ),
                                               SizedBox(
@@ -163,26 +277,30 @@ class HomeScreen extends BaseView<HomeController> {
                                               ),
                                               Column(
                                                 mainAxisAlignment:
-                                                MainAxisAlignment.start,
+                                                    MainAxisAlignment.start,
                                                 crossAxisAlignment:
-                                                CrossAxisAlignment.start,
+                                                    CrossAxisAlignment.start,
                                                 children: [
                                                   Text(
-                                                    "Dennis Reynolds",
+                                                    controller.homeData[index]
+                                                            ["name"]
+                                                        .toString(),
                                                     style:
-                                                    poppinsRegular.copyWith(
+                                                        poppinsRegular.copyWith(
                                                       fontSize: 12.sp,
                                                       color:
-                                                      AppColors.whiteColor,
+                                                          AppColors.whiteColor,
                                                     ),
                                                   ),
                                                   Text(
-                                                    "2 hrs ago",
+                                                    controller.homeData[index]
+                                                            ["time"]
+                                                        .toString(),
                                                     style:
-                                                    poppinsRegular.copyWith(
+                                                        poppinsRegular.copyWith(
                                                       fontSize: 12.sp,
                                                       color:
-                                                      AppColors.textColor,
+                                                          AppColors.textColor,
                                                     ),
                                                   ),
                                                 ],
@@ -203,7 +321,7 @@ class HomeScreen extends BaseView<HomeController> {
                                         padding: EdgeInsets.all(13.r),
                                         child: Row(
                                           mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
+                                              MainAxisAlignment.spaceEvenly,
                                           children: [
                                             Container(
                                               padding: EdgeInsets.symmetric(
@@ -212,9 +330,9 @@ class HomeScreen extends BaseView<HomeController> {
                                               ),
                                               decoration: BoxDecoration(
                                                 borderRadius:
-                                                BorderRadius.circular(35.r),
+                                                    BorderRadius.circular(35.r),
                                                 color:
-                                                AppColors.decorationColor,
+                                                    AppColors.decorationColor,
                                               ),
                                               child: Row(
                                                 children: [
@@ -227,12 +345,14 @@ class HomeScreen extends BaseView<HomeController> {
                                                     width: 8.w,
                                                   ),
                                                   Text(
-                                                    "5.2k",
+                                                    controller.homeData[index]
+                                                            ["like"]
+                                                        .toString(),
                                                     style:
-                                                    poppinsRegular.copyWith(
+                                                        poppinsRegular.copyWith(
                                                       fontSize: 12.sp,
                                                       color:
-                                                      AppColors.whiteColor,
+                                                          AppColors.whiteColor,
                                                     ),
                                                   ),
                                                 ],
@@ -245,9 +365,9 @@ class HomeScreen extends BaseView<HomeController> {
                                               ),
                                               decoration: BoxDecoration(
                                                 borderRadius:
-                                                BorderRadius.circular(35.r),
+                                                    BorderRadius.circular(35.r),
                                                 color:
-                                                AppColors.decorationColor,
+                                                    AppColors.decorationColor,
                                               ),
                                               child: Row(
                                                 children: [
@@ -260,12 +380,14 @@ class HomeScreen extends BaseView<HomeController> {
                                                     width: 8.w,
                                                   ),
                                                   Text(
-                                                    "1.1k",
+                                                    controller.homeData[index]
+                                                            ["chat"]
+                                                        .toString(),
                                                     style:
-                                                    poppinsRegular.copyWith(
+                                                        poppinsRegular.copyWith(
                                                       fontSize: 12.sp,
                                                       color:
-                                                      AppColors.whiteColor,
+                                                          AppColors.whiteColor,
                                                     ),
                                                   ),
                                                 ],
@@ -278,9 +400,9 @@ class HomeScreen extends BaseView<HomeController> {
                                               ),
                                               decoration: BoxDecoration(
                                                 borderRadius:
-                                                BorderRadius.circular(35.r),
+                                                    BorderRadius.circular(35.r),
                                                 color:
-                                                AppColors.decorationColor,
+                                                    AppColors.decorationColor,
                                               ),
                                               child: Row(
                                                 children: [
@@ -293,12 +415,14 @@ class HomeScreen extends BaseView<HomeController> {
                                                     width: 8.w,
                                                   ),
                                                   Text(
-                                                    "312",
+                                                    controller.homeData[index]
+                                                            ["save"]
+                                                        .toString(),
                                                     style:
-                                                    poppinsRegular.copyWith(
+                                                        poppinsRegular.copyWith(
                                                       fontSize: 12.sp,
                                                       color:
-                                                      AppColors.whiteColor,
+                                                          AppColors.whiteColor,
                                                     ),
                                                   ),
                                                 ],
@@ -313,171 +437,6 @@ class HomeScreen extends BaseView<HomeController> {
                               );
                             },
                           ),
-                          // Container(
-                          //   height: 288.h,
-                          //   width: double.infinity,
-                          //   decoration: BoxDecoration(
-                          //     borderRadius: BorderRadius.circular(20.r),
-                          //     image: const DecorationImage(
-                          //       image: AssetImage("assets/image/home1.jpg"),
-                          //       fit: BoxFit.cover,
-                          //     ),
-                          //   ),
-                          //   child: Stack(
-                          //     children: [
-                          //       Padding(
-                          //         padding: EdgeInsets.all(13.r),
-                          //         child: Row(
-                          //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          //           crossAxisAlignment: CrossAxisAlignment.start,
-                          //           children: [
-                          //             Row(
-                          //               mainAxisAlignment: MainAxisAlignment.start,
-                          //               crossAxisAlignment: CrossAxisAlignment.start,
-                          //               children: [
-                          //                 ClipRRect(
-                          //                   borderRadius: BorderRadius.circular(100.r),
-                          //                   child: Image.asset(
-                          //                     "assets/image/profile1.jpg",
-                          //                     height: 36.w,
-                          //                     width: 36.w,
-                          //                   ),
-                          //                 ),
-                          //                 SizedBox(
-                          //                   width: 7.w,
-                          //                 ),
-                          //                 Column(
-                          //                   mainAxisAlignment: MainAxisAlignment.start,
-                          //                   crossAxisAlignment:
-                          //                   CrossAxisAlignment.start,
-                          //                   children: [
-                          //                     Text(
-                          //                       "Dennis Reynolds",
-                          //                       style: poppinsRegular.copyWith(
-                          //                         fontSize: 12.sp,
-                          //                         color: AppColors.whiteColor,
-                          //                       ),
-                          //                     ),
-                          //                     Text(
-                          //                       "2 hrs ago",
-                          //                       style: poppinsRegular.copyWith(
-                          //                         fontSize: 12.sp,
-                          //                         color: AppColors.textColor,
-                          //                       ),
-                          //                     ),
-                          //                   ],
-                          //                 ),
-                          //               ],
-                          //             ),
-                          //             Image.asset(
-                          //               "assets/image/option_menu.png",
-                          //               height: 18.h,
-                          //               width: 5.w,
-                          //             ),
-                          //           ],
-                          //         ),
-                          //       ),
-                          //       Align(
-                          //         alignment: Alignment.bottomCenter,
-                          //         child: Padding(
-                          //           padding: EdgeInsets.all(13.r),
-                          //           child: Row(
-                          //             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          //             children: [
-                          //               Container(
-                          //                 padding: EdgeInsets.symmetric(
-                          //                   horizontal: 9.w,
-                          //                   vertical: 6.h,
-                          //                 ),
-                          //                 decoration: BoxDecoration(
-                          //                   borderRadius: BorderRadius.circular(35.r),
-                          //                   color: AppColors.decorationColor,
-                          //                 ),
-                          //                 child: Row(
-                          //                   children: [
-                          //                     Image.asset(
-                          //                       "assets/image/like.png",
-                          //                       height: 18.w,
-                          //                       width: 18.w,
-                          //                     ),
-                          //                     SizedBox(
-                          //                       width: 8.w,
-                          //                     ),
-                          //                     Text(
-                          //                       "5.2k",
-                          //                       style: poppinsRegular.copyWith(
-                          //                         fontSize: 12.sp,
-                          //                         color: AppColors.whiteColor,
-                          //                       ),
-                          //                     ),
-                          //                   ],
-                          //                 ),
-                          //               ),
-                          //               Container(
-                          //                 padding: EdgeInsets.symmetric(
-                          //                   horizontal: 9.w,
-                          //                   vertical: 6.h,
-                          //                 ),
-                          //                 decoration: BoxDecoration(
-                          //                   borderRadius: BorderRadius.circular(35.r),
-                          //                   color: AppColors.decorationColor,
-                          //                 ),
-                          //                 child: Row(
-                          //                   children: [
-                          //                     Image.asset(
-                          //                       "assets/image/chat.png",
-                          //                       height: 18.w,
-                          //                       width: 18.w,
-                          //                     ),
-                          //                     SizedBox(
-                          //                       width: 8.w,
-                          //                     ),
-                          //                     Text(
-                          //                       "1.1k",
-                          //                       style: poppinsRegular.copyWith(
-                          //                         fontSize: 12.sp,
-                          //                         color: AppColors.whiteColor,
-                          //                       ),
-                          //                     ),
-                          //                   ],
-                          //                 ),
-                          //               ),
-                          //               Container(
-                          //                 padding: EdgeInsets.symmetric(
-                          //                   horizontal: 9.w,
-                          //                   vertical: 6.h,
-                          //                 ),
-                          //                 decoration: BoxDecoration(
-                          //                   borderRadius: BorderRadius.circular(35.r),
-                          //                   color: AppColors.decorationColor,
-                          //                 ),
-                          //                 child: Row(
-                          //                   children: [
-                          //                     Image.asset(
-                          //                       "assets/image/save.png",
-                          //                       height: 18.w,
-                          //                       width: 18.w,
-                          //                     ),
-                          //                     SizedBox(
-                          //                       width: 8.w,
-                          //                     ),
-                          //                     Text(
-                          //                       "312",
-                          //                       style: poppinsRegular.copyWith(
-                          //                         fontSize: 12.sp,
-                          //                         color: AppColors.whiteColor,
-                          //                       ),
-                          //                     ),
-                          //                   ],
-                          //                 ),
-                          //               )
-                          //             ],
-                          //           ),
-                          //         ),
-                          //       ),
-                          //     ],
-                          //   ),
-                          // ),
                         ],
                       ),
                     ),
