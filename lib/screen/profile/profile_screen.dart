@@ -30,9 +30,9 @@ class ProfileScreen extends BaseView<ProfileController> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(
-                    height: 20.h,
-                  ),
+                  // SizedBox(
+                  //   height: 20.h,
+                  // ),
                   GestureDetector(
                     onTap: () {
                       Get.back();

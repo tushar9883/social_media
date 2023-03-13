@@ -33,14 +33,14 @@ class ChatScreen extends BaseView<ChatController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(
-                    height: 48.h,
+                    height: 40.h,
                   ),
                   GestureDetector(
                     onTap: () {
                       Get.back();
                     },
                     child: Padding(
-                      padding: EdgeInsets.only(left: 20.w),
+                      padding: EdgeInsets.symmetric(horizontal: 37.w),
                       child: Image.asset(
                         "assets/image/back.png",
                         height: 20.w,
@@ -49,14 +49,14 @@ class ChatScreen extends BaseView<ChatController> {
                     ),
                   ),
                   SizedBox(
-                    height: 33.h,
+                    height: 53.h,
                   ),
                   Row(
                     children: [
                       Container(
                         width: 78.w,
                         height: 78.h,
-                        margin: EdgeInsets.only(left: 30.w),
+                        margin: EdgeInsets.only(left: 46.w),
                         child: Stack(
                           children: [
                             Transform.rotate(
@@ -88,7 +88,7 @@ class ChatScreen extends BaseView<ChatController> {
                         ),
                       ),
                       SizedBox(
-                        width: 20.w,
+                        width: 36.w,
                       ),
                       Column(
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -203,7 +203,7 @@ class ChatScreen extends BaseView<ChatController> {
                     },
                   ),
                   Positioned(
-                    bottom: 10,
+                    bottom: 20.h,
                     left: 0,
                     right: 0,
                     child: Container(

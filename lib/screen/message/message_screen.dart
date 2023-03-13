@@ -13,6 +13,7 @@ class MessageScreen extends BaseView<MessageController> {
   @override
   Widget vBuilder(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.whiteColor,
       floatingActionButton: Container(
         height: 66.w,
         width: 66.w,
@@ -57,8 +58,11 @@ class MessageScreen extends BaseView<MessageController> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                SizedBox(
+                  height: 10.h,
+                ),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 40.w),
+                  padding: EdgeInsets.symmetric(horizontal: 37.w),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [

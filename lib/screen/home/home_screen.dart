@@ -21,10 +21,13 @@ class HomeScreen extends BaseView<HomeController> {
               alignment: Alignment.bottomCenter,
               child: Container(
                 width: double.infinity,
-                height: 86.h,
+                height: 80.h,
                 padding: EdgeInsets.only(left: 30.w, right: 30.w, bottom: 20.h),
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20.r),
+                  borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(20.r),
+                    topLeft: Radius.circular(20.r),
+                  ),
                   boxShadow: [
                     BoxShadow(
                       color: AppColors.lightBlackColor,
@@ -45,12 +48,13 @@ class HomeScreen extends BaseView<HomeController> {
                           "assets/image/home_ic.png",
                           height: 20.h,
                           width: 18.w,
+                          color: AppColors.greenColor,
                         ),
                         SizedBox(
                           width: 44.w,
                         ),
                         GestureDetector(
-                          onTap: (){
+                          onTap: () {
                             Get.toNamed(RouterName.message);
                           },
                           child: Image.asset(
@@ -74,7 +78,7 @@ class HomeScreen extends BaseView<HomeController> {
                           width: 44.w,
                         ),
                         GestureDetector(
-                          onTap: (){
+                          onTap: () {
                             Get.toNamed(RouterName.profile);
                           },
                           child: Image.asset(
@@ -94,7 +98,7 @@ class HomeScreen extends BaseView<HomeController> {
               child: Container(
                 height: 62.w,
                 width: 62.w,
-                decoration:  BoxDecoration(
+                decoration: BoxDecoration(
                   image: const DecorationImage(
                     image: AssetImage("assets/image/bottomsheet.png"),
                   ),
@@ -134,6 +138,9 @@ class HomeScreen extends BaseView<HomeController> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  SizedBox(
+                    height: 10.h,
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -175,13 +182,18 @@ class HomeScreen extends BaseView<HomeController> {
                             height: 15.h,
                           ),
                           SizedBox(
-                            height: 60.h,
+                            height: 62.h,
                             width: double.infinity,
-                            child: ListView.builder(
+                            child: ListView.separated(
                               physics: const BouncingScrollPhysics(),
                               scrollDirection: Axis.horizontal,
                               itemCount: controller.storyList.length + 1,
                               shrinkWrap: true,
+                              separatorBuilder: (context, index) {
+                                return SizedBox(
+                                  width: 20.w,
+                                );
+                              },
                               itemBuilder: (context, index) {
                                 if (index == 0) {
                                   return ClipRRect(
@@ -193,25 +205,22 @@ class HomeScreen extends BaseView<HomeController> {
                                           BoxShadow(
                                             color: AppColors.gradientColor,
                                             blurRadius: 12.r,
-                                            offset: const Offset(-20, 4),
+                                            offset: const Offset(0, 4),
                                           ),
                                         ],
                                       ),
-                                      child: Padding(
-                                        padding: EdgeInsets.only(right: 20.w),
-                                        child: Image.asset(
-                                          "assets/image/story.png",
-                                          height: 56.w,
-                                          width: 56.w,
-                                          // fit: BoxFit.contain,
-                                        ),
+                                      child: Image.asset(
+                                        "assets/image/story.png",
+                                        height: 56.w,
+                                        width: 56.w,
+                                        // fit: BoxFit.contain,
                                       ),
                                     ),
                                   );
                                 } else {
                                   var newIndex = index - 1;
                                   return Container(
-                                    margin: EdgeInsets.only(right: 20.w),
+                                    // margin: EdgeInsets.only(right: 20.w),
                                     child: Image.asset(
                                       "${controller.storyList[newIndex]}",
                                       width: 56.w,
@@ -225,26 +234,41 @@ class HomeScreen extends BaseView<HomeController> {
                           SizedBox(
                             height: 39.h,
                           ),
-                          ListView.builder(
+                          ListView.separated(
                             shrinkWrap: true,
                             physics: const NeverScrollableScrollPhysics(),
                             itemCount: controller.homeData.length,
+                            separatorBuilder: (context, index) {
+                              return SizedBox(
+                                height: 32.h,
+                              );
+                            },
                             itemBuilder: (context, index) {
                               return Container(
-                                margin: EdgeInsets.only(bottom: 32.h),
                                 height: 288.h,
                                 width: double.infinity,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(20.r),
-                                  image: DecorationImage(
-                                    image: AssetImage(controller.homeData[index]
-                                            ["image"]
-                                        .toString()),
-                                    fit: BoxFit.cover,
-                                  ),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: AppColors.hintColor,
+                                      blurRadius: 10.r,
+                                      offset: const Offset(0, 2),
+                                    ),
+                                  ],
                                 ),
                                 child: Stack(
                                   children: [
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(20.r),
+                                      child: Image.asset(
+                                        height: 288.h,
+                                        width: double.infinity,
+                                        controller.homeData[index]["image"]
+                                            .toString(),
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
                                     Padding(
                                       padding: EdgeInsets.all(13.r),
                                       child: Row(
